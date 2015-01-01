@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: advertising, ad manager, ads, ad, ad management, ad rotator, widget, banner management, ad server, images, image, sidebar, plugin, post
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.1.26
+Stable tag: 1.1.27
 
 The AdPlugg WordPress Ad Plugin is a simple plugin that allows you to display
 ads on your WordPress site.
@@ -20,6 +20,7 @@ The AdPlugg WordPress Ad Plugin includes the following awesome features:
 * Ability to add your AdPlugg ads to your WordPress site from the WordPress Administrator with no access to the underlying source code required.
 * Ability to add you AdPlugg ads to any Widget Area on your site by dragging the AdPlugg Widget into that area.
 * Support for Zones allowing you to put different ads in different locations on a page.
+* Works with AdPlugg's Free and Pro versions.
 
 <strong>PS: You'll need a free [adplugg.com Access Code](https://www.adplugg.com/apusers/signup) in order to use the plugin.</strong>
 
@@ -51,6 +52,9 @@ For questions and answers, visit the [AdPlugg Question/Answer System at AdPlugg.
 1. The AdPlugg WordPress Ad Plugin makes it easy to place ads on your WordPress site.
 
 == Changelog ==
+
+= 1.1.27 =
+* Added Works with Free and Pro Versions to readme.txt
 
 = 1.1.26 =
 * Updated the readme.txt file to reflect that WP 4.1 is fully tested and working.
