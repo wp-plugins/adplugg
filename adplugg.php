@@ -4,7 +4,7 @@
 Plugin Name: AdPlugg
 Plugin URI: http://www.adplugg.com
 Description: The AdPlugg WordPress Ad Plugin is a simple plugin that allows you to easily insert ads on your WordPress blog. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="https://www.adplugg.com/apusers/signup">Sign up for a free AdPlugg account</a>, and 3) Go to the AdPlugg configuration page, and save your AdPlugg Access Code.
-Version: 1.1.28
+Version: 1.1.29
 Author: AdPlugg
 Author URI: www.adplugg.com
 License: GPL v3
@@ -41,7 +41,7 @@ if(file_exists(ADPLUGG_PATH . 'config.php')) {
 }
 
 if(!defined('ADPLUGG_ADSERVER')) { define('ADPLUGG_ADSERVER', 'www.adplugg.com/apusers'); }
-if(!defined('ADPLUGG_VERSION')) { define('ADPLUGG_VERSION', '1.1.28'); }
+if(!defined('ADPLUGG_VERSION')) { define('ADPLUGG_VERSION', '1.1.29'); }
 
 define('ADPLUGG_OPTIONS_NAME', 'adplugg_options');
 define('ADPLUGG_NOTICES_NAME', 'adplugg_notices');
@@ -60,7 +60,7 @@ if(is_admin()) {
     //includes
     require_once(ADPLUGG_PATH . 'admin/admin-class.php');
     require_once(ADPLUGG_PATH . 'admin/pages/class-options-page.php');
-    require_once(ADPLUGG_PATH . 'admin/help/options-page-help.php');
+    require_once(ADPLUGG_PATH . 'admin/help/help-dispatch.php');
     
     //Plugin setup and registrations
     $adplugg_admin = new AdPlugg_Admin();
@@ -70,7 +70,7 @@ if(is_admin()) {
     
     //set up the options page 
     $adplugg_options_page = new AdPlugg_Options_Page();
-    add_filter('contextual_help', 'adplugg_options_page_help', 10, 3);
+    add_filter('contextual_help', 'adplugg_help_dispatch', 10, 3);
 
 } else {
     //---- FRONT END ----//
