@@ -36,15 +36,9 @@ class AdPlugg_Options_Page {
             <?php if(adplugg_is_access_code_installed()) { ?>
                 <br/>
                 <ul>
-<<<<<<< HEAD
-                    <li>Manage my ads at <a href="https://www.adplugg.com/apusers/login" target="_blank">adplugg.com</a>.</li>
-                    <li>Place the AdPlugg Widget on my site from the <a href="<?php echo admin_url( 'widgets.php' )?>">WordPress Widgets Configuration Page</a>.</li>
-                    <li>Get <a href="#" onclick="jQuery('a#contextual-help-link').trigger('click');">help</a> using this plugin.</li>
-=======
                     <li>Manage my ads at <a href="https://www.adplugg.com/apusers/login" target="_blank" title="Manage my ads at adplugg.com">adplugg.com</a>.</li>
                     <li>Place the AdPlugg Widget on my site from the <a href="<?php echo admin_url( 'widgets.php' )?>" title="Go to the Widgets Configuration Page.">WordPress Widgets Configuration Page</a>.</li>
-                    <li>Get <a href="#" onclick="jQuery('a#contextual-help-link').trigger('click');" title="Get help using this plugin.">help</a> using this plugin.</li>
->>>>>>> master
+                    <li>Get <a href="#" onclick="jQuery('a#contextual-help-link').trigger('click'); return false;" title="Get help using this plugin.">help</a> using this plugin.</li>
                 </ul>
             <?php } //end if ?>
         </div>
