@@ -4,7 +4,7 @@
 Plugin Name: AdPlugg
 Plugin URI: http://www.adplugg.com
 Description: The AdPlugg WordPress Ad Plugin is a simple plugin that allows you to easily insert ads on your WordPress blog. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="https://www.adplugg.com/apusers/signup">Sign up for a free AdPlugg account</a>, and 3) Go to the AdPlugg configuration page, and save your AdPlugg Access Code.
-Version: 1.1.37
+Version: 1.1.38
 Author: AdPlugg
 Author URI: www.adplugg.com
 License: GPL v3
@@ -41,19 +41,19 @@ if(file_exists(ADPLUGG_PATH . 'config.php')) {
 }
 
 if(!defined('ADPLUGG_ADSERVER')) { define('ADPLUGG_ADSERVER', 'www.adplugg.com/apusers'); }
-if(!defined('ADPLUGG_VERSION')) { define('ADPLUGG_VERSION', '1.1.37'); }
+if(!defined('ADPLUGG_VERSION')) { define('ADPLUGG_VERSION', '1.1.38'); }
 
 define('ADPLUGG_OPTIONS_NAME', 'adplugg_options');
 define('ADPLUGG_NOTICES_NAME', 'adplugg_notices');
 define('ADPLUGG_WIDGET_OPTIONS_NAME', 'widget_adplugg');
 
+//includes
+require_once(ADPLUGG_PATH . 'functions.php');
+require_once(ADPLUGG_PATH . 'tests/qunit.php');
+require_once(ADPLUGG_PATH . 'widgets/AdPlugg_Widget.php');
 
 // Register the AdPlugg Widget
-require_once(ADPLUGG_PATH . 'widgets/AdPlugg_Widget.php');
 add_action('widgets_init', create_function('', 'return register_widget("AdPlugg_Widget");'));
-
-//include the adplugg functions
-require_once(ADPLUGG_PATH . 'functions.php');
 
 if(is_admin()) {
     //---- ADMIN ----//
@@ -71,6 +71,11 @@ if(is_admin()) {
     //set up the options page 
     $adplugg_options_page = new AdPlugg_Options_Page();
     add_filter('contextual_help', 'adplugg_help_dispatch', 10, 3);
+    
+    //load qunit
+    if( (defined('ADPLUGG_LOAD_QUNIT')) && (ADPLUGG_LOAD_QUNIT == true) ) {
+        add_action('admin_footer', 'adplugg_load_qunit');
+    }
 
 } else {
     //---- FRONT END ----//
