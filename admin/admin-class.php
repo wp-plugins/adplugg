@@ -18,7 +18,6 @@ class AdPlugg_Admin {
         add_filter("plugin_action_links_" . ADPLUGG_BASENAME, array(&$this, 'adplugg_settings_link'));
         
         add_action('admin_init', array(&$this, 'adplugg_admin_init'));
-        add_action('admin_notices', array(&$this, 'adplugg_admin_notices'));
     }
     
     /**
@@ -43,54 +42,18 @@ class AdPlugg_Admin {
             update_option(ADPLUGG_OPTIONS_NAME, $options);
             if(!is_null($data_version)) {  //skip if not an upgrade
                 //do any necessary version data upgrades here
-                $notices = get_option(ADPLUGG_NOTICES_NAME);
-                $notices[] = "Upgraded version from $data_version to " . ADPLUGG_VERSION . ".";
-                update_option(ADPLUGG_NOTICES_NAME, $notices);
+                $upgrade_notice = AdPlugg_Notice::create('notify_upgrade', "Upgraded version from $data_version to " . ADPLUGG_VERSION . ".");
+                adplugg_notice_add_to_queue($upgrade_notice);
             }
         }
         
         //Add the AdPlugg admin stylesheet to the WP admin head
         wp_register_style('adPluggAdminStylesheet', plugins_url('../css/admin.css', __FILE__) );
         wp_enqueue_style('adPluggAdminStylesheet');
-    }
-
-    /**
-     * Add Notices in the administrator. Notices may be stored in the 
-     * adplugg_options. Once the notices have been displayed, delete them from
-     * the database.
-     */
-    function adplugg_admin_notices() {
-        $stored_notices = get_option(ADPLUGG_NOTICES_NAME);
-        $screen = get_current_screen();
-        $screen_id = (!empty($screen) ? $screen->id : null);
-        $notices = array();
         
-        //stored notices
-        if($stored_notices) {
-            foreach($stored_notices as $notice) {
-                $notices[] = $notice;
-            }
-            delete_option(ADPLUGG_NOTICES_NAME);
-        }
-        
-        if(!adplugg_is_access_code_installed()) {
-            if($screen_id != "settings_page_adplugg") {
-                $notices[]= 'You\'ve activated the AdPlugg Plugin, yay! Now let\'s <a href="options-general.php?page=adplugg">configure</a> it!';
-            }
-        } else {
-            if(!adplugg_is_widget_active()) {
-                if($screen_id == "widgets") {
-                    $notices[]= 'Drag the AdPlugg Widget into a Widget Area to display ads on your site.';
-                } else {
-                    $notices[]= 'You\'re configured and ready to go. Now just drag the AdPlugg Widget into a Widget Area. Go to <a href="' . admin_url('widgets.php') . '">Widget Configuration</a>.';
-                }
-            }
-        }
-        
-        //print the notices
-        foreach($notices as $notice) {
-            echo '<div class="updated"><p><strong>AdPlugg:</strong> ' . $notice . '</p></div>';
-        }
+        //Add the AdPlugg admin JavaScript page to the WP admin head
+        wp_register_script('adPluggAdminJavaScriptPage', plugins_url('../js/admin.js', __FILE__) );
+        wp_enqueue_script('adPluggAdminJavaScriptPage');
     }
     
     /**
@@ -108,11 +71,12 @@ class AdPlugg_Admin {
     }
     
     /**
-     * Function called when AdPlugg is uninstalled
+     * Called when plugin is uninstalled.
      */
     static function adplugg_uninstall() {
         delete_option(ADPLUGG_OPTIONS_NAME);
         delete_option(ADPLUGG_NOTICES_NAME);
+        delete_option(ADPLUGG_NOTICES_DISMISSED_NAME);
         delete_option(ADPLUGG_WIDGET_OPTIONS_NAME);
     }
 

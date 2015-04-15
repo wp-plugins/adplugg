@@ -1,6 +1,10 @@
 <?php
 
+require_once(ADPLUGG_PATH . 'admin/notices/notice-class.php');
+require_once(ADPLUGG_PATH . 'admin/notices/notice-functions.php');
+require_once(ADPLUGG_PATH . 'admin/notices/notice-controller-class.php');
 require_once(ADPLUGG_PATH . 'admin/admin-class.php');
+
 
 /**
  * The AdminTest class includes tests for testing the AdPlugg_Admin class.
@@ -26,11 +30,7 @@ class AdminTest extends WP_UnitTestCase {
         
         //Assert that the init function is registered.
         $function_names = get_function_names($wp_filter['admin_init']);
-        $this->assertContains('adplugg_admin_init', $function_names);
-        
-        //Assert that the admin notices function is registered.
-        $function_names = get_function_names($wp_filter['admin_notices']);
-        $this->assertContains('adplugg_admin_notices', $function_names);        
+        $this->assertContains('adplugg_admin_init', $function_names);      
     }
     
     /**
@@ -63,8 +63,9 @@ class AdminTest extends WP_UnitTestCase {
         $this->assertEquals($new_options['version'], ADPLUGG_VERSION);
         
         //Assert that a notice of the upgrade was registered.
+        $adplugg_notice_controller = new AdPlugg_Notice_Controller();
         ob_start();
-        $adplugg_admin->adplugg_admin_notices();
+        $adplugg_notice_controller->adplugg_admin_notices();
         $outbound = ob_get_contents();
         ob_end_clean();
         $this->assertContains("Upgraded version from", $outbound);
@@ -72,20 +73,6 @@ class AdminTest extends WP_UnitTestCase {
         //Assert that the admin stylesheet is registered
         global $wp_styles;
         $this->assertContains('adPluggAdminStylesheet', serialize($wp_styles));
-    }
-    
-    /**
-     * Test the adplugg_admin_notices function.
-     */    
-    public function test_adplugg_admin_notices() {
-        $adplugg_admin = new AdPlugg_Admin();
-        
-        //assert that a notice was registered
-        ob_start();
-        $adplugg_admin->adplugg_admin_notices();
-        $outbound = ob_get_contents();
-        ob_end_clean();
-        $this->assertContains("AdPlugg", $outbound);
     }
     
      /**
