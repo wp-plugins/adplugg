@@ -4,7 +4,7 @@
 Plugin Name: AdPlugg
 Plugin URI: http://www.adplugg.com
 Description: The AdPlugg WordPress Ad Plugin is a simple plugin that allows you to easily insert ads on your WordPress blog. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="https://www.adplugg.com/apusers/signup">Sign up for a free AdPlugg account</a>, and 3) Go to the AdPlugg configuration page, and save your AdPlugg Access Code.
-Version: 1.2.6
+Version: 1.2.7
 Author: AdPlugg
 Author URI: www.adplugg.com
 License: GPL v3
@@ -41,7 +41,7 @@ if(file_exists(ADPLUGG_PATH . 'config.php')) {
 }
 
 if(!defined('ADPLUGG_ADSERVER')) { define('ADPLUGG_ADSERVER', 'www.adplugg.com/apusers'); }
-if(!defined('ADPLUGG_VERSION')) { define('ADPLUGG_VERSION', '1.2.6'); }
+if(!defined('ADPLUGG_VERSION')) { define('ADPLUGG_VERSION', '1.2.7'); }
 
 //Persisted options
 define('ADPLUGG_OPTIONS_NAME', 'adplugg_options');
@@ -61,11 +61,11 @@ add_action('widgets_init', create_function('', 'return register_widget("AdPlugg_
 if(is_admin()) {
     //---- ADMIN ----//
     //includes
-    require_once(ADPLUGG_PATH . 'admin/notices/notice-class.php');
-    require_once(ADPLUGG_PATH . 'admin/notices/notice-controller-class.php');
+    require_once(ADPLUGG_PATH . 'admin/notices/class-notice.php');
+    require_once(ADPLUGG_PATH . 'admin/notices/class-notice-controller.php');
     require_once(ADPLUGG_PATH . 'admin/notices/notice-functions.php');
     
-    require_once(ADPLUGG_PATH . 'admin/admin-class.php');
+    require_once(ADPLUGG_PATH . 'admin/class-admin.php');
     require_once(ADPLUGG_PATH . 'admin/pages/class-options-page.php');
     require_once(ADPLUGG_PATH . 'admin/help/help-dispatch.php');
     
